@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import Display from "./Display.tsx";
+import routeHomePage from "../routeHomepage.tsx";
 
 export default function StopWatch() {
   const [elapsed, setElapsed] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  routeHomePage();
 
   // ← MINIMAL CHANGE: accept both browser (number) and Node (NodeJS.Timeout) results
   const intervalRef = useRef<number | NodeJS.Timeout | null>(null);
