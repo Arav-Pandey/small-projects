@@ -1,121 +1,112 @@
-import "./App.css";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { LuLogIn } from "react-icons/lu";
-import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "./LoginButton";
+import { useEffect, useState } from "react";
+import Profile from "./Profile";
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: string }>;
+}
 
 function App() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const [see, setSee] = useState("password");
+  const { isAuthenticated, isLoading, error, user } = useAuth0();
+  const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent>();
 
-  const handleLogin = () => {
-    if (
-      username === localStorage.getItem("username") &&
-      password === localStorage.getItem("password")
-    ) {
-      alert(`Logged in as ${username}`);
-      navigate("/homepage"); // ✅ route to homepage
-    } else {
-      alert("Invalid credentials");
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      setInstallEvent(e as any);
+      console.log(installEvent + "erfgerferfefrfeferf");
+    });
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      localStorage.setItem("token", user.sub || "");
+
+      fetch(
+        `/.netlify/functions/login`,
+
+        {
+          body: JSON.stringify({
+            email: user.email,
+            id: user.sub,
+          }),
+          method: "POST",
+        }
+      );
     }
-  };
-  const handleForgotPasscode = () => {
-    navigate("/forgotpasscode"); // ✅ route to forgot passcode
-  };
+  }, [isAuthenticated, user]);
+
+  if (isLoading) {
+    return (
+      <div className="app-container">
+        <div className="loading-state">
+          <div className="loading-text">Loading...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        <div>
+          <div>Oops!</div>
+          <div>Something went wrong</div>
+          <div>{error.message}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
       style={{
+        width: "100%",
+        maxWidth: "1000px",
+        height: "80vh",
         display: "flex",
-        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        margin: "0 auto",
       }}
     >
-      <h1>Login Screen</h1>
-      <div>
-        <input
-          type="text"
-          placeholder="Username"
-          style={{
-            padding: "10px",
-            fontSize: "16px",
-            marginBottom: "10px",
-            marginRight: "10px",
-          }}
-          onChange={(e) => setUsername(e.target.value)} // ✅ update state
-        />
-        <input
-          type={see}
-          placeholder="Password"
-          style={{ padding: "10px", fontSize: "16px", marginBottom: "10px" }}
-          onChange={(e) => setPassword(e.target.value)} // ✅ update state
-        />
-
-        <button
-          onClick={(e) => {
-            if (see === "password") {
-              setSee("text");
-              return;
-            } else setSee("password");
-          }}
-          style={{
-            background: "none", // remove default button background
-            border: "none", // remove border
-            cursor: "pointer", // make it clickable
-            width: "5px",
-            height: "5px",
-            justifyContent: "center",
-            alignContent: "center",
-            outline: "none",
-          }}
-        >
-          {see === "password" ? (
-            <VscEye size={30} />
-          ) : (
-            <VscEyeClosed size={30} />
-          )}
-        </button>
-      </div>
-
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
+          justifyContent: "center",
           alignItems: "center",
-          cursor: "pointer",
+          minHeight: "80vh",
         }}
       >
-        <button
-          style={{
-            padding: "10px 20px",
-            fontSize: "16px",
-            cursor: "pointer",
-            marginRight: "30px",
-          }}
-          onClick={handleForgotPasscode} // ✅ route to forgot passcode
-        >
-          Forgot Passcode
-        </button>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-        >
-          <LuLogIn
-            size={40}
-            style={{ cursor: "pointer" }}
-            onClick={handleLogin}
-          />
-          <span style={{ fontSize: "18px" }}>Login</span>
-        </div>
+        <h1>Login Screen</h1>
+        {isAuthenticated ? (
+          <div>
+            <Profile />
+            <button onClick={() => (window.location.href = "/homepage")}>
+              Would you like to proceed to the homepage?
+            </button>
+            <button
+              style={{ marginLeft: "10px" }}
+              onClick={() => installEvent?.prompt()}
+            >
+              Install App
+            </button>
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <p>Get started by signing in to your account</p>
+            <LoginButton />
+          </div>
+        )}
       </div>
     </div>
   );

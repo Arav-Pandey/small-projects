@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import HomeLogo from "./HomeLogo";
+import routeHomePage from "./routeHomepage";
 
 export default function Word() {
   const [amount, setAmount] = useState(0);
   const [sentence, setSentence] = useState("");
+
+  routeHomePage();
 
   useEffect(() => {
     count();
@@ -20,7 +23,14 @@ export default function Word() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <h1>Word Count</h1>
       <h3>
         Enter a sentence and I will count how many words are in the sentence
@@ -32,6 +42,7 @@ export default function Word() {
           setSentence(e.target.value);
           count();
         }}
+        style={{ borderRadius: "10px", fontSize: "20px" }}
       />
 
       <div>
