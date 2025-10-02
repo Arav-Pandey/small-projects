@@ -3,26 +3,56 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LuLogIn } from "react-icons/lu";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import CustomAlert from "./CustomAlert";
 
-function App() {
+export default function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [see, setSee] = useState("password");
+  const [customAlert, setCustomAlert] = useState<string | null>(null);
 
-  const handleLogin = () => {
-    if (
-      username === localStorage.getItem("username") &&
-      password === localStorage.getItem("password")
-    ) {
-      alert(`Logged in as ${username}`);
-      navigate("/homepage"); // ✅ route to homepage
-    } else {
-      alert("Invalid credentials");
+  const handleForgot = () => {
+    navigate("/forgotpassword");
+  };
+  const handleLogin = async () => {
+    if (!username || !password) {
+      alert("Please fill in both fields.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/.netlify/functions/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Invalid credentials");
+        return;
+      }
+
+      // ✅ Store JWT in localStorage or sessionStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", username);
+
+      setCustomAlert(`✅ Logged in as ${username}`);
+
+      // ✅ Redirect after short delay
+      setTimeout(() => {
+        navigate("/homepage");
+      }, 1000);
+    } catch (err) {
+      console.error(err);
+      alert("Network error — could not reach server.");
     }
   };
-  const handleForgotPasscode = () => {
-    navigate("/forgotpasscode"); // ✅ route to forgot passcode
+
+  const handleRegister = () => {
+    navigate("/register");
   };
 
   return (
@@ -32,7 +62,7 @@ function App() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        minHeight: "80vh",
       }}
     >
       <h1>Login Screen</h1>
@@ -91,14 +121,37 @@ function App() {
       >
         <button
           style={{
+            marginBottom: "20px",
             padding: "10px 20px",
             fontSize: "16px",
             cursor: "pointer",
-            marginRight: "30px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+            border: "none",
+            background: "rgba(0, 200, 255, 0.2)",
+            outline: "none",
+            marginRight: "20px",
+            color: "rgba(40, 45, 47, 1)",
           }}
-          onClick={handleForgotPasscode} // ✅ route to forgot passcode
+          onClick={handleRegister} // ✅ route to forgot passcode
         >
-          Forgot Passcode
+          Create new account
+        </button>
+        <button
+          style={{
+            marginBottom: "20px",
+            padding: "10px 20px",
+            fontSize: "16px",
+            cursor: "pointer",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+            border: "none",
+            background: "rgba(0, 200, 255, 0.2)",
+            outline: "none",
+            marginRight: "20px",
+            color: "rgba(40, 45, 47, 1)",
+          }}
+          onClick={handleForgot} // ✅ route to forgot passcode
+        >
+          Forgot Password?
         </button>
 
         <div
@@ -117,8 +170,7 @@ function App() {
           <span style={{ fontSize: "18px" }}>Login</span>
         </div>
       </div>
+      <CustomAlert customAlert={customAlert} setCustomAlert={setCustomAlert} />
     </div>
   );
 }
-
-export default App;

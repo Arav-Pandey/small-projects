@@ -5,12 +5,11 @@ import App from "./App.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Todos2 from "./Calculator/Todos2.tsx";
 import Todos3 from "./Todos3.tsx";
-import Todos4 from "./Todos4.tsx";
-import Todos5 from "./Todos5.tsx";
+import Todos4 from "./Measure/Todos4.tsx";
+import Todos5 from "./MoneyConverter/Todos5.tsx";
 import Todos from "./Todos.tsx";
 import Todos6 from "./Todos6.tsx";
 import HomePage from "./HomePage.tsx";
-import ForgotPasscode from "./ForgotPasscode.tsx";
 import Weight from "./Weight.tsx";
 import UnitConverter from "./UnitConverter";
 import Jokes from "./Jokes.tsx";
@@ -20,14 +19,16 @@ import SpeedConverter from "./SpeedConverter.tsx";
 import Word from "./Word.tsx";
 import StopWatch from "./StopWatch/StopWatch.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Quote from "./Quote.tsx";
-import StockPrice from "./StockPrices/StockPrice.tsx";
+import Quote from "./Quote/Quote.tsx";
+import StockPrice from "./Stock/StockPrice.tsx";
 import WeatherTemp from "./WeatherApp/WeatherTemp.tsx";
 import WeatherAstro from "./WeatherApp/WeatherAstro.tsx";
 import WeatherVis from "./WeatherApp/WeatherVis.tsx";
 import WeatherPrecip from "./WeatherApp/WeatherPrecip.tsx";
 import WeatherWind from "./WeatherApp/WeatherWind.tsx";
-import Timer from "./Timer.tsx";
+import Timer from "./Timer/Timer.tsx";
+import Register from "./Register.tsx";
+import ForgotPasscode from "./ForgotPasscode.tsx";
 
 const queryClient = new QueryClient();
 
@@ -44,7 +45,6 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/todos" element={<Todos />} />
           <Route path="/tictactoe" element={<Todos6 />} />
           <Route path="/homepage" element={<HomePage />} />
-          <Route path="/forgotpasscode" element={<ForgotPasscode />} />
           <Route path="/weight" element={<Weight />} />
           <Route path="/unitconverter" element={<UnitConverter />} />
           <Route path="/jokes" element={<Jokes />} />
@@ -53,7 +53,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/speed" element={<SpeedConverter />} />
           <Route path="/word" element={<Word />} />
           <Route path="/stopwatch" element={<StopWatch />} />
-          <Route path="/quote" element={<Quote />} />
+          <Route path="/quotes" element={<Quote />} />
           <Route path="/stocks" element={<StockPrice />} />
           <Route path="/weathertemp/:city" element={<WeatherTemp />} />
           <Route path="/weatherastro/:city" element={<WeatherAstro />} />
@@ -61,6 +61,8 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/weatherprecip/:city" element={<WeatherPrecip />} />
           <Route path="/weatherwind/:city" element={<WeatherWind />} />
           <Route path="/timer" element={<Timer />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgotpassword" element={<ForgotPasscode />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

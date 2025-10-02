@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import HomeLogo from "./HomeLogo";
+import routeHomePage from "./routeHomepage";
 
 export default function Weight() {
   const [num, setNum] = useState("");
@@ -13,6 +14,8 @@ export default function Weight() {
     ["Milligrams", 453592.0],
     ["Ounces", 16.0],
   ]);
+
+  routeHomePage();
 
   const Convert = () => {
     const number = parseFloat(num);
@@ -48,7 +51,7 @@ export default function Weight() {
         height: "100vh",
       }}
     >
-      <h1>Weight Converter</h1>
+      <h1 style={{ marginBottom: "2px" }}>Weight Converter</h1>
       <HomeLogo />
       <input
         type="number"
@@ -60,12 +63,18 @@ export default function Weight() {
           fontSize: "16px",
           marginBottom: "10px",
           width: "200px",
+          borderRadius: "10px",
         }}
       ></input>
       <div>
         <select
           onChange={(e) => setFromWeight(e.target.value)}
-          style={{ padding: "10px", fontSize: "16px", marginRight: "10px" }}
+          style={{
+            padding: "10px",
+            fontSize: "16px",
+            marginRight: "10px",
+            borderRadius: "7px",
+          }}
         >
           <option value="Pounds">Pounds</option>
           <option value="Kilograms">Kilograms</option>
@@ -74,7 +83,12 @@ export default function Weight() {
         </select>
         <select
           onChange={(e) => setToWeight(e.target.value)}
-          style={{ padding: "10px", fontSize: "16px", marginRight: "10px" }}
+          style={{
+            padding: "10px",
+            fontSize: "16px",
+            marginRight: "10px",
+            borderRadius: "7px",
+          }}
         >
           <option value="Pounds">Pounds</option>
           <option value="Kilograms">Kilograms</option>

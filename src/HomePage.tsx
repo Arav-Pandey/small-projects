@@ -1,44 +1,76 @@
-import {
-  FaSignOutAlt,
-  FaLaughSquint,
-  FaCalendarAlt,
-  FaFileWord,
-} from "react-icons/fa";
-import { SiConvertio, SiTheweatherchannel } from "react-icons/si";
-import { FcCalculator } from "react-icons/fc";
-import { FaListCheck } from "react-icons/fa6";
-import { GiTicTacToe } from "react-icons/gi";
-import { FaStopwatch } from "react-icons/fa6";
-import { LuMessageSquareQuote } from "react-icons/lu";
-import { AiOutlineStock } from "react-icons/ai";
+import { useState } from "react";
+import CustomAlert from "./CustomAlert";
+import { useNavigate } from "react-router-dom";
+import routeHomePage from "./routeHomepage";
 
 export default function HomePage() {
-  function NavLink(href: string, Icon: React.ElementType, label: string) {
+  const navigate = useNavigate();
+  const emojiLinks: { href: string; emoji: string; label: string }[] = [
+    { href: "/unitconverter", emoji: "🔄", label: "Unit Converter" },
+    { href: "/calculator", emoji: "🧮", label: "Calculator" },
+    { href: "/todos", emoji: "✅", label: "To-Do List" },
+    { href: "/tictactoe", emoji: "❌⭕", label: "Tic-Tac-Toe" },
+    { href: "/jokes", emoji: "😂", label: "Jokes Page" },
+    { href: "/weatherapp", emoji: "🌤️", label: "Weather App" },
+    { href: "/calendar", emoji: "📅", label: "Calendar" },
+    { href: "/word", emoji: "📝", label: "Word Counter" },
+    { href: "/stopwatch", emoji: "⏱️", label: "Stop Watch" },
+    { href: "/quotes", emoji: "💬", label: "Motivational Quotes" },
+    { href: "/stocks", emoji: "📈", label: "Stock Prices" },
+    { href: "/timer", emoji: "⏲️", label: "Timer" },
+  ];
+  const [customAlert, setCustomAlert] = useState<string | null>(null);
+
+  routeHomePage();
+
+  function NavLink(emoji: string, label: string, href: string) {
     return (
-      <a href={href} style={{ textDecoration: "none", color: "inherit" }}>
+      <a
+        key={label}
+        href={href}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
         <div
           style={{
+            textDecoration: "none",
             display: "flex",
-            flexDirection: "row",
             alignItems: "center",
-            cursor: "pointer",
             justifyContent: "center",
+            background: "rgba(255, 255, 255, 0.15)", // ✨ translucent card
+            padding: "15px 30px",
+            borderRadius: "12px",
+            color: "white",
+            fontWeight: "500",
+            fontSize: "30px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+            transition: "transform 0.2s, background 0.2s",
             marginBottom: "10px",
           }}
         >
-          <Icon size={20} />
-          <span style={{ fontSize: "18px", marginLeft: "5px" }}>{label}</span>
+          <span style={{ marginRight: "10px" }}>{emoji}</span>
+          <span className="nav-link">{label}</span>
         </div>
       </a>
     );
   }
 
+  const back = () => {
+    setCustomAlert(`Signing out...`);
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+  };
+
   return (
     <div className="HomePage">
       <h1>Choose what program</h1>
       <h1>You want to run</h1>
-      <h3>No Api pages working yet. :( Sorry</h3>
-      <a href="/" style={{ textDecoration: "none", color: "inherit" }}>
+      <button
+        onClick={(e) => back()}
+        style={{ outline: "none", background: "none", border: "none" }}
+      >
         <div
           style={{
             display: "flex",
@@ -47,10 +79,9 @@ export default function HomePage() {
             cursor: "pointer",
           }}
         >
-          <FaSignOutAlt size={40} />
-          <span style={{ fontSize: "18px" }}>Sign Out</span>
+          <span style={{ fontSize: "40px" }}>🔙</span>
         </div>
-      </a>
+      </button>
       <div
         style={{
           display: "flex",
@@ -59,33 +90,9 @@ export default function HomePage() {
           justifyContent: "center",
         }}
       >
-        <ul>
-          {NavLink("/unitconverter", SiConvertio, "Unit Converter")}
-          {NavLink("/calculator", FcCalculator, "Calculator")}
-          {NavLink("/todos", FaListCheck, "To-Do List")}
-          {NavLink("/tictactoe", GiTicTacToe, "Tic-Tac-Toe")}
-          {NavLink("/jokes", FaLaughSquint, "Jokes Page")}
-          {NavLink(
-            "/homepage",
-            SiTheweatherchannel,
-            "Weather App (Not working sorry)"
-          )}
-          {NavLink("/calendar", FaCalendarAlt, "Calendar")}
-          {NavLink("/word", FaFileWord, "Word Counter")}
-          {NavLink("/stopwatch", FaStopwatch, "Stop Watch")}
-          {NavLink(
-            "/homepage",
-            LuMessageSquareQuote,
-            "Motivational Quotes (Not working sorry)"
-          )}
-          {NavLink(
-            "/homepage",
-            AiOutlineStock,
-            "Stock Prices (Not working sorry)"
-          )}
-          {NavLink("/timer", FaStopwatch, "Timer")}
-        </ul>
+        {emojiLinks.map((link) => NavLink(link.emoji, link.label, link.href))}
       </div>
+      <CustomAlert customAlert={customAlert} setCustomAlert={setCustomAlert} />
     </div>
   );
 }
