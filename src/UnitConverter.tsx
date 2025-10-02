@@ -88,7 +88,7 @@ export default function UnitConverter() {
           </li>
           <li>
             <a
-              href="/unitconverter"
+              href="/money"
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <div
@@ -103,7 +103,7 @@ export default function UnitConverter() {
               >
                 <FaMoneyCheckDollar size={30} fill="white" />
                 <span style={{ fontSize: "18px", marginLeft: "5px" }}>
-                  Money Converter Not working yet sorry. :(
+                  Money Converter
                 </span>
               </div>
             </a>

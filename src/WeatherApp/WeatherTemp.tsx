@@ -41,8 +41,8 @@ export default function WeatherTemp() {
           <p>Local Time Estimate: {weather.data.location.localtime}</p>
           <p>Last Updated: {weather.data.current.last_updated}</p>
           <p>
-            🌡 Temp: {weather.data.current.temp_c}°C /{" "}
-            {weather.data.current.temp_f}°F
+            🌡 Current Temperature: {weather.data.current.temp_f}°F /{" "}
+            {weather.data.current.temp_c}°C
           </p>
           <p>
             🌡 Max Temp: {weather.data.forecast.forecastday[0].day.maxtemp_f}°F /{" "}
@@ -55,8 +55,8 @@ export default function WeatherTemp() {
           <p>🌥 Condition: {weather.data.current.condition.text}</p>
           <p>
             <WiThermometer size={24} /> Feels like:{" "}
-            {weather.data.current.feelslike_c}°C /{" "}
-            {weather.data.current.feelslike_f}°F
+            {weather.data.current.feelslike_f}°F /{" "}
+            {weather.data.current.feelslike_c}°C
           </p>
           <p>
             <WiHumidity size={24} /> Humidity: {weather.data.current.humidity}%

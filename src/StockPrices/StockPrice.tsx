@@ -8,8 +8,6 @@ export default function StockPrice() {
   const [inputValue, setInputValue] = useState("AAPL");
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
-  const API_KEY = import.meta.env.VITE_QUOTE_API_KEY;
-
   // Trigger search on Enter
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -18,7 +16,7 @@ export default function StockPrice() {
     }
   };
 
-  // Fetch autocomplete suggestions
+  // Autocomplete search (optional — can remove if you only want direct search)
   const handleSearch = async (query: string) => {
     setInputValue(query);
 
@@ -27,10 +25,8 @@ export default function StockPrice() {
       return;
     }
 
-    const res = await fetch(
-      `https://api.api-ninjas.com/v1/stockticker?name=${query}`,
-      { headers: { "X-Api-Key": API_KEY } }
-    );
+    // ✅ Hit our Netlify backend instead of the external API
+    const res = await fetch(`/.netlify/functions/stock?ticker=${query}`);
 
     if (!res.ok) {
       setSearchResults([]);
@@ -38,18 +34,15 @@ export default function StockPrice() {
     }
 
     const data = await res.json();
-    setSearchResults(data);
+    setSearchResults(Array.isArray(data) ? data : []);
   };
 
-  // Fetch stock price
+  // ✅ Use React Query to fetch the stock price via our backend
   const stockQuery = useQuery({
     queryKey: ["ticker", ticker],
     queryFn: async () => {
       const q = encodeURIComponent(ticker);
-      const res = await fetch(
-        `https://api.api-ninjas.com/v1/stockprice?ticker=${q}`,
-        { headers: { "X-Api-Key": API_KEY } }
-      );
+      const res = await fetch(`/.netlify/functions/stock?ticker=${q}`);
 
       if (!res.ok) throw new Error("Failed to fetch stock price");
       return res.json();

@@ -65,7 +65,7 @@ export default function Calendar() {
           textAlign: "center",
         }}
       >
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
+        {["S", "M", "T", "W", "T", "F", "S"].map((d) => (
           <div key={d}>{d}</div>
         ))}
       </div>

@@ -7,16 +7,20 @@ export default function Todos4() {
   const [toCurrency, setToCurrency] = useState("USD");
   const [result, setResult] = useState(0);
   const [rates, setRates] = useState<{ [key: string]: number }>({});
-  const API_KEY = import.meta.env.VITE_MONEY_API_KEY;
-  // Fetch rates when component loads
+
   useEffect(() => {
-    fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`) // Fetches from this link
-      .then((res) => res.json()) // ?????
+    fetch("/.netlify/functions/money")
+      .then((res) => res.json())
       .then((data) => {
-        setRates(data.conversion_rates); //?????
+        if (data.conversion_rates) {
+          setRates(data.conversion_rates);
+        } else {
+          console.error("Unexpected API response:", data);
+        }
       })
-      .catch((err) => console.error("Error fetching rates:", err)); // Catches errors
+      .catch((err) => console.error("Error fetching rates:", err));
   }, []);
+
   useEffect(() => {
     convert();
   }, [amount, fromCurrency, toCurrency, rates]);

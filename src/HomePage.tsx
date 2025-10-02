@@ -37,7 +37,6 @@ export default function HomePage() {
     <div className="HomePage">
       <h1>Choose what program</h1>
       <h1>You want to run</h1>
-      <h3>No Api pages working yet. :( Sorry</h3>
       <a href="/" style={{ textDecoration: "none", color: "inherit" }}>
         <div
           style={{
@@ -65,24 +64,12 @@ export default function HomePage() {
           {NavLink("/todos", FaListCheck, "To-Do List")}
           {NavLink("/tictactoe", GiTicTacToe, "Tic-Tac-Toe")}
           {NavLink("/jokes", FaLaughSquint, "Jokes Page")}
-          {NavLink(
-            "/homepage",
-            SiTheweatherchannel,
-            "Weather App (Not working sorry)"
-          )}
+          {NavLink("/weatherapp", SiTheweatherchannel, "Weather App")}
           {NavLink("/calendar", FaCalendarAlt, "Calendar")}
           {NavLink("/word", FaFileWord, "Word Counter")}
           {NavLink("/stopwatch", FaStopwatch, "Stop Watch")}
-          {NavLink(
-            "/homepage",
-            LuMessageSquareQuote,
-            "Motivational Quotes (Not working sorry)"
-          )}
-          {NavLink(
-            "/homepage",
-            AiOutlineStock,
-            "Stock Prices (Not working sorry)"
-          )}
+          {NavLink("/quotes", LuMessageSquareQuote, "Motivational Quotes")}
+          {NavLink("/stocks", AiOutlineStock, "Stock Prices")}
           {NavLink("/timer", FaStopwatch, "Timer")}
         </ul>
       </div>

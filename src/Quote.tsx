@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function Quote() {
   const [category] = useState("life"); // you can change category
-  const API_KEY = import.meta.env.VITE_QUOTE_API_KEY;
+  const API_KEY = "dkjvndkvjbndvn";
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["quote", category], // makes a cache that stores copies of the cities
