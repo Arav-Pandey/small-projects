@@ -1,9 +1,12 @@
 import { useState } from "react";
 import HomeLogo from "./HomeLogo";
+import routeHomePage from "./routeHomepage";
 
 export const Todos = () => {
   const [tasks, setTasks] = useState<{ text: string; done: boolean }[]>([]);
   const [newTask, setNewTask] = useState("");
+
+  routeHomePage();
 
   // Example tasks
   const exampleTasks = [
@@ -14,7 +17,14 @@ export const Todos = () => {
   const displayTasks = tasks.length === 0 ? exampleTasks : tasks;
 
   return (
-    <div>
+    <div
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <h1>To-Do list</h1>
       <h3>
         Add any item you would like to your list and I will keep track of it.
@@ -87,7 +97,7 @@ export const Todos = () => {
             placeholder="Enter a new task here..."
             onChange={(e) => setNewTask(e.target.value)}
             style={{
-              borderRadius: "4px",
+              borderRadius: "8px",
               padding: "6px 10px",
               outline: "none",
             }}
@@ -121,6 +131,7 @@ export const Todos = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          fontSize: "20px",
         }}
       >
         {displayTasks.map((task, index) => (

@@ -21,6 +21,8 @@ import {
   handleSin,
   handleLn,
 } from "./calcHandlers.tsx";
+import HomeLogo from "../HomeLogo.tsx";
+import routeHomePage from "../routeHomepage.tsx";
 
 export default function Todos2() {
   const [num1, setNum1] = useState("");
@@ -28,17 +30,19 @@ export default function Todos2() {
   const [op, setOp] = useState<string | null>(null);
   const [result, setResult] = useState<number | null>(null);
 
+  routeHomePage();
+
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        height: "100vh",
+        minHeight: "100vh",
       }}
     >
-      <h2>Calculator</h2>
-      <a href="/homepage">Go back to home</a>
+      <h1 style={{ marginBottom: "5px", marginTop: "2px" }}>Calculator</h1>
+      <HomeLogo />
 
       <Display num1={num1} num2={num2} setNum1={setNum1} setNum2={setNum2} />
 
@@ -66,7 +70,9 @@ export default function Todos2() {
         }}
       />
 
-      <div>
+      <div
+        style={{ marginBottom: "20px", marginTop: "20px", fontSize: "25px" }}
+      >
         <strong>
           Result: {num1} {op} {num2} ={" "}
         </strong>
