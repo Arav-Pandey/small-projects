@@ -3,20 +3,24 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LuLogIn } from "react-icons/lu";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import CustomAlert from "./CustomAlert";
 
 function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [see, setSee] = useState("password");
+  const [customAlert, setCustomAlert] = useState<string | null>(null);
 
   const handleLogin = () => {
     if (
       username === localStorage.getItem("username") &&
       password === localStorage.getItem("password")
     ) {
-      alert(`Logged in as ${username}`);
-      navigate("/homepage"); // ✅ route to homepage
+      setCustomAlert(`✅ Logged in as ${username}`);
+      setTimeout(() => {
+        navigate("/homepage");
+      }, 1000);
     } else {
       alert("Invalid credentials");
     }
@@ -32,7 +36,7 @@ function App() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        minHeight: "80vh",
       }}
     >
       <h1>Login Screen</h1>
@@ -117,6 +121,7 @@ function App() {
           <span style={{ fontSize: "18px" }}>Login</span>
         </div>
       </div>
+      <CustomAlert customAlert={customAlert} setCustomAlert={setCustomAlert} />
     </div>
   );
 }

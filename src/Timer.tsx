@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import HomeLogo from "./HomeLogo";
+import { FaPause, FaPlayCircle } from "react-icons/fa";
+import { RiResetLeftLine } from "react-icons/ri";
 
 export default function Timer() {
   const [time, setTime] = useState(0);
@@ -58,20 +60,40 @@ export default function Timer() {
             setTime(val);
             setInitialTime(val);
           }}
-          style={{ height: "25px" }}
+          style={{
+            height: "25px",
+            outline: "none", // ❌ removes the focus outline
+            color: "black", // ✅ makes text black
+            fontSize: "16px", // (optional) nicer size
+          }}
         />
         <HomeLogo />
       </div>
 
-      <h2>{time} s</h2>
+      <h2>{isNaN(time) ? "N/A" : time}</h2>
 
       {!isRunning ? (
-        <button onClick={handleStart}>Start</button>
+        <button
+          onClick={handleStart}
+          style={{ background: "none", border: "none", outline: "none" }}
+        >
+          <FaPlayCircle size="30" />
+        </button>
       ) : (
-        <button onClick={handlePause}>Pause</button>
+        <button
+          onClick={handlePause}
+          style={{ background: "none", border: "none", outline: "none" }}
+        >
+          <FaPause fill="white" size="30" />
+        </button>
       )}
 
-      <button onClick={handleReset}>Reset</button>
+      <button
+        onClick={handleReset}
+        style={{ background: "none", border: "none", outline: "none" }}
+      >
+        <RiResetLeftLine fill="white" size="30" />
+      </button>
     </div>
   );
 }

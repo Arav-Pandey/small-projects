@@ -16,6 +16,18 @@ export default function WeatherApp() {
 
   const weather = useWeather(city); // ✅ fetch handled in hook
 
+  function links(href: string, color: string, name: string) {
+    return (
+      <Link
+        to={href}
+        className="nav-link"
+        style={{ fontSize: "25px", marginBottom: "10px", color }}
+      >
+        {name}
+      </Link>
+    );
+  }
+
   useEffect(() => {
     localStorage.setItem("weatherCity", city);
   }, [city]);
@@ -42,6 +54,7 @@ export default function WeatherApp() {
             padding: "8px",
             marginBottom: "10px",
             width: "200px",
+            borderRadius: "10px",
           }}
         />
 
@@ -52,56 +65,37 @@ export default function WeatherApp() {
         />
       </div>
 
-      <h3>
+      <h2>
         {weather.data?.location?.name}, {weather.data?.location?.region},{" "}
         {weather.data?.location?.country}
-      </h3>
+      </h2>
 
-      <div
-        style={{ display: "flex", gap: "16px", textDecoration: "underline" }}
-      >
-        <Link
-          to={`/weathertemp/${city}`}
-          style={{ fontSize: "25px", color: "white", marginBottom: "10px" }}
-        >
-          Temp
-        </Link>
-        <Link
-          to={`/weatherastro/${city}`}
-          style={{ fontSize: "25px", color: "white", marginBottom: "10px" }}
-        >
-          Astronomy
-        </Link>
-        <Link
-          to={`/weathervis/${city}`}
-          style={{ fontSize: "25px", color: "white", marginBottom: "10px" }}
-        >
-          Visual/Dewpoint
-        </Link>
+      <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+        {links(`/weathertemp/${city}`, "orange", "Temperature")}
+        {links(`/weatherastro/${city}`, "grey", "Astronomy")}
+        {links(`/weathervis/${city}`, "red", "Visual/Dewpoint")}
       </div>
       <div
         style={{
           display: "flex",
           gap: "16px",
-          textDecoration: "underline",
+          alignItems: "center",
         }}
       >
-        <Link
-          to={`/weatherprecip/${city}`}
-          style={{ fontSize: "25px", color: "white", marginBottom: "10px" }}
-        >
-          Precipitation/Pressure/Snow
-        </Link>
-        <Link
-          to={`/weatherwind/${city}`}
-          style={{ fontSize: "25px", color: "white", marginBottom: "10px" }}
-        >
-          Wind/Gust speeds
-        </Link>
+        {links(`/weatherprecip/${city}`, "blue", "Precipitation/Pressure/Snow")}
+        {links(`/weatherwind/${city}`, "grey", "Wind/Gust speeds")}
       </div>
-
-      <HomeLogo />
-      <WeatherLogo icon={weather.data?.current?.condition?.icon} />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "5px",
+        }}
+      >
+        <HomeLogo />
+        <WeatherLogo icon={weather.data?.current?.condition?.icon} />
+      </div>
     </div>
   );
 }

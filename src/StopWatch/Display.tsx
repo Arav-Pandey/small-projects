@@ -20,7 +20,7 @@ export default function Display({
   formatTime,
 }: DisplayProps) {
   return (
-    <div style={{ textAlign: "center", marginTop: 24 }}>
+    <div style={{ textAlign: "center", marginTop: "5px" }}>
       <div className="circle">
         <div className="orbit-wrapper">
           <div

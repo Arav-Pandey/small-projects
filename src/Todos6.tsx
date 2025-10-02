@@ -9,6 +9,7 @@ export default function Todos4() {
   const [winner, setWinner] = useState<string | null>(null);
   const [isDraw, setIsDraw] = useState(false);
   const [winningPattern, setWinningPattern] = useState<number[] | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const checkWinner = () => {
     // Horizontal
@@ -67,6 +68,10 @@ export default function Todos4() {
           padding: "10px 20px",
           fontSize: "16px",
           cursor: "pointer",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+          border: "none",
+          background: "none",
+          outline: "none",
         }}
       >
         Reset Board
@@ -81,6 +86,7 @@ export default function Todos4() {
       >
         {board.map((cell, index) => {
           const isWinningCell = winningPattern?.includes(index) && winner; // ✅ check if this cell is part of winning pattern
+          const isHovered = hoveredIndex === index;
 
           return (
             <button
@@ -91,6 +97,14 @@ export default function Todos4() {
                 newBoard[index] = currentPlayer;
                 setBoard(newBoard);
                 setCurrentPlayer(currentPlayer === player1 ? player2 : player1);
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.1)";
+                if (!cell && !winner) setHoveredIndex(index); // 👈 set hover preview
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+                setHoveredIndex(null); // 👈 clear preview
               }}
               style={{
                 width: "100px",
@@ -106,7 +120,7 @@ export default function Todos4() {
                   : "black",
               }}
             >
-              {cell}
+              {cell || (isHovered && currentPlayer) || ""}
             </button>
           );
         })}
