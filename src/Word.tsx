@@ -32,6 +32,7 @@ export default function Word() {
           setSentence(e.target.value);
           count();
         }}
+        style={{ borderRadius: "10px" }}
       />
 
       <div>

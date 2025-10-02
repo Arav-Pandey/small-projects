@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import HomeLogo from "./HomeLogo";
+import HomeLogo from "../HomeLogo";
+import { RxSwitch } from "react-icons/rx";
+import Display from "./Display";
 
 export default function Todos4() {
   //Sets default values
@@ -50,6 +52,12 @@ export default function Todos4() {
 
   if (error) return <p>Error fetching money convertions. Sorry :(</p>;
 
+  const handleClass = () => {
+    return className === "led-input"
+      ? setClassName("")
+      : setClassName("led-input");
+  };
+
   return (
     <div
       // The style for the layout of the div
@@ -58,29 +66,27 @@ export default function Todos4() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        minHeight: "10vh",
       }}
     >
-      <h2>Measure Converter</h2>
+      <h1 style={{ marginTop: "2px" }}>Measure Converter</h1>
       <HomeLogo />
-      <input
+      <Display
+        num={num}
+        setNum={setNum}
         className={className}
-        type="number"
-        value={num}
-        onChange={(e) => setNum(e.target.value)}
-        placeholder="Enter value"
-        style={{
-          padding: "10px",
-          fontSize: "16px",
-          marginBottom: "10px",
-          width: "200px",
-        }}
+        handleClass={handleClass}
       />
 
       <div>
         <select
           onChange={(e) => setFromUnit(e.target.value)}
-          style={{ padding: "10px", fontSize: "16px", marginRight: "10px" }}
+          style={{
+            padding: "10px",
+            fontSize: "16px",
+            marginRight: "10px",
+            borderRadius: "7px",
+          }}
         >
           {supportedUnits.map(
             (
@@ -98,7 +104,12 @@ export default function Todos4() {
 
         <select
           onChange={(e) => setToUnit(e.target.value)}
-          style={{ padding: "10px", fontSize: "16px", marginRight: "10px" }}
+          style={{
+            padding: "10px",
+            fontSize: "16px",
+            marginRight: "10px",
+            borderRadius: "7px",
+          }}
         >
           {supportedUnits.map((unit) => (
             <option key={unit} value={unit}>
@@ -106,34 +117,6 @@ export default function Todos4() {
             </option>
           ))}
         </select>
-
-        <div>
-          <button
-            onClick={(e) => setClassName("led-input")}
-            style={{
-              padding: "5px 10px",
-              fontSize: "12px",
-              marginRight: "5px",
-              borderRadius: "6px",
-              cursor: "pointer",
-            }}
-          >
-            LED lights on
-          </button>
-
-          <button
-            onClick={(e) => setClassName("")}
-            style={{
-              padding: "5px 10px",
-              fontSize: "12px",
-              marginRight: "5px",
-              borderRadius: "6px",
-              cursor: "pointer",
-            }}
-          >
-            LED lights off
-          </button>
-        </div>
 
         <div style={{ marginTop: "20px", fontSize: "18px" }}>
           Result:

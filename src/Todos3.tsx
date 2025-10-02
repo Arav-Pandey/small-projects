@@ -40,7 +40,7 @@ export default function Todos2() {
         textAlign: "center",
       }}
     >
-      <h2>Temperature Converter</h2>
+      <h1 style={{ marginBottom: "2px" }}>Temperature Converter</h1>
       <HomeLogo />
       <div style={{ marginBottom: 10 }}>
         <div style={{ marginBottom: 10 }}>
@@ -61,7 +61,12 @@ export default function Todos2() {
           <select
             value={fromTemp}
             onChange={(e) => setFromTemp(e.target.value)}
-            style={{ padding: "10px", fontSize: "16px", marginRight: "10px" }}
+            style={{
+              padding: "10px",
+              fontSize: "16px",
+              marginRight: "10px",
+              borderRadius: "7px",
+            }}
           >
             <option value="Fahrenheit">Fahrenheit</option>
             <option value="Celsius">Celsius</option>
@@ -70,7 +75,7 @@ export default function Todos2() {
           <select
             value={toTemp}
             onChange={(e) => setToTemp(e.target.value)}
-            style={{ padding: "10px", fontSize: "16px" }}
+            style={{ padding: "10px", fontSize: "16px", borderRadius: "7px" }}
           >
             <option value="Fahrenheit">Fahrenheit</option>
             <option value="Celsius">Celsius</option>

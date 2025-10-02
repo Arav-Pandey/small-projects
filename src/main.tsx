@@ -5,7 +5,7 @@ import App from "./App.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Todos2 from "./Calculator/Todos2.tsx";
 import Todos3 from "./Todos3.tsx";
-import Todos4 from "./Todos4.tsx";
+import Todos4 from "./Measure/Todos4.tsx";
 import Todos5 from "./Todos5.tsx";
 import Todos from "./Todos.tsx";
 import Todos6 from "./Todos6.tsx";
@@ -53,7 +53,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/speed" element={<SpeedConverter />} />
           <Route path="/word" element={<Word />} />
           <Route path="/stopwatch" element={<StopWatch />} />
-          <Route path="/quote" element={<Quote />} />
+          <Route path="/quotes" element={<Quote />} />
           <Route path="/stocks" element={<StockPrice />} />
           <Route path="/weathertemp/:city" element={<WeatherTemp />} />
           <Route path="/weatherastro/:city" element={<WeatherAstro />} />

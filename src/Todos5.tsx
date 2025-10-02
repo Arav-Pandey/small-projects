@@ -7,16 +7,20 @@ export default function Todos4() {
   const [toCurrency, setToCurrency] = useState("USD");
   const [result, setResult] = useState(0);
   const [rates, setRates] = useState<{ [key: string]: number }>({});
-  const API_KEY = import.meta.env.VITE_MONEY_API_KEY;
-  // Fetch rates when component loads
+
   useEffect(() => {
-    fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`) // Fetches from this link
-      .then((res) => res.json()) // ?????
+    fetch("/.netlify/functions/money")
+      .then((res) => res.json())
       .then((data) => {
-        setRates(data.conversion_rates); //?????
+        if (data.conversion_rates) {
+          setRates(data.conversion_rates);
+        } else {
+          console.error("Unexpected API response:", data);
+        }
       })
-      .catch((err) => console.error("Error fetching rates:", err)); // Catches errors
+      .catch((err) => console.error("Error fetching rates:", err));
   }, []);
+
   useEffect(() => {
     convert();
   }, [amount, fromCurrency, toCurrency, rates]);
@@ -51,20 +55,30 @@ export default function Todos4() {
         height: "100vh",
       }}
     >
-      <h1>Money Converter</h1>
+      <h1 style={{ marginBottom: "2px" }}>Money Converter</h1>
       <HomeLogo />
       <input
         type="number"
         placeholder="Enter amount"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
-        style={{ padding: "10px", fontSize: "16px", marginBottom: "20px" }}
+        style={{
+          padding: "10px",
+          fontSize: "16px",
+          marginBottom: "20px",
+          borderRadius: "10px",
+        }}
       />
       <div>
         <select
           value={fromCurrency}
           onChange={(e) => setFromCurrency(e.target.value)}
-          style={{ padding: "10px", fontSize: "16px", marginRight: "10px" }}
+          style={{
+            padding: "10px",
+            fontSize: "16px",
+            marginRight: "10px",
+            borderRadius: "7px",
+          }}
         >
           {Object.keys(rates).map((currency) => (
             <option key={currency} value={currency}>
@@ -75,7 +89,7 @@ export default function Todos4() {
         <select
           value={toCurrency}
           onChange={(e) => setToCurrency(e.target.value)}
-          style={{ padding: "10px", fontSize: "16px" }}
+          style={{ padding: "10px", fontSize: "16px", borderRadius: "7px" }}
         >
           {Object.keys(rates).map((currency) => (
             <option key={currency} value={currency}>

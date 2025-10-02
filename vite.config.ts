@@ -8,5 +8,4 @@ export default defineConfig({
     port: 5713,
     host: "localhost",
   },
-  assetsInclude: ["**/*.html"],
 })
