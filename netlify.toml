@@ -1,5 +1,8 @@
 [dev]
-  command = "vite"
-  port = 5714
-  targetPort = 5713
-  publish = "dist"
+command = "vite"
+targetPort = 5713 # the port Vite actually runs on
+publish = "dist"
+
+[build]
+command = "npm run build"
+publish = "dist"
