@@ -80,3 +80,43 @@
     box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
   }
 }
+
+/* LED wrapper: places animated background behind an input */
+.led-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #000;
+  box-shadow: 0 0 8px rgba(0,0,0,0.6);
+  animation: ledGlow 3s infinite;
+}
+
+.led-wrapper .led-input-element {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  width: 150px;
+  font-size: 15px;
+  padding: 6px 8px;
+}
+
+/* small LED indicator dot */
+.led-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 8px;
+  box-shadow: 0 0 6px rgba(255,0,0,0.8);
+  background: #ff0000;
+  animation: ledDotPulse 3s infinite;
+}
+
+@keyframes ledDotPulse {
+  0% { background: #ff0000; box-shadow: 0 0 6px #ff0000; }
+  33% { background: #00ff00; box-shadow: 0 0 6px #00ff00; }
+  66% { background: #00ccff; box-shadow: 0 0 6px #00ccff; }
+  100% { background: #ff0000; box-shadow: 0 0 6px #ff0000; }
+}

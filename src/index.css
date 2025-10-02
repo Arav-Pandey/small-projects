@@ -3,14 +3,20 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: rgba(255, 255, 255, 0.87); /* white text */
+  
+--bg: linear-gradient(135deg, #6EE7B7 0%, #3B82F6 100%) ;
+  --text: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.dark {
+  --bg: linear-gradient(135deg, #2b095c 0%, #063671 100%);
+
 }
 
 a {
@@ -43,6 +49,7 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
+  color: white; /* ensure button text is visible */
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -54,28 +61,15 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
 .circle {
   position: relative;
   width: 200px;
   height: 200px;
-  border: 4px solid #3b82f6; /* solid visible ring */
+  border: 4px solid #3b82f6;
   border-radius: 50%;
   margin: 50px auto;
 }
 
-/* wrapper to keep orbit centered */
 .orbit-wrapper {
   position: absolute;
   top: 50%;
@@ -83,32 +77,157 @@ button:focus-visible {
   transform: translate(-50%, -50%);
 }
 
-/* this one actually rotates */
 .orbit {
-  width: 200px;  /* match circle */
+  width: 200px;
   height: 200px;
 }
-
-/* .orbit-animation {
-  animation: spin 4s linear infinite;
-} */
 
 .ball {
   position: absolute;
   top: 50%;
-  left: 100%; /* ball on edge */
+  left: 100%;
   width: 30px;
   height: 30px;
   background: blue;
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
+/* Recommended: scale for a smooth size change */
+.nav-link {
+  position: relative;
+  display: inline-block;
+  color: #ffffff;
+  font-weight: 500;
+  padding: 5px 0;
+  transition: color 0.2s ease, transform 0.25s cubic-bezier(.2,.9,.2,1);
+  transform-origin: center;
+  will-change: transform;
+}
 
-/* @keyframes spin {
-  from {
-    transform: rotate(0deg);
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 2px;
+  width: 100%;
+  background-color: #0077ff;
+  border-radius: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #005bbb;
+  transform: scale(1.12); /* ✅ underline scales too now */
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+}
+
+/* full-page gradient that always covers the viewport */
+body {
+  /* Center page content and ensure full-viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background:var(--bg);
+  background-attachment: scroll;   /* keeps the gradient visible while scrolling */
+  background-size: cover;        /* cover whole area */
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+.led-input {
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  width: 200px;
+  border: 2px solid #222;
+  border-radius: 8px;
+  outline: none;
+  color: white;
+  background: black;
+  box-shadow: 0 0 10px #ff0000;
+  /* starting glow */
+  animation: ledGlow 3s infinite;
+}
+
+@keyframes ledGlow {
+  0% {
+    box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
   }
-  to {
-    transform: rotate(360deg);
+
+  25% {
+    box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
   }
-} */
+
+  50% {
+    box-shadow: 0 0 10px #0000ff, 0 0 20px #0000ff;
+  }
+
+  75% {
+    box-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00;
+  }
+
+  100% {
+    box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+  }
+}
+.card {
+  width: 130px;
+  height: 130px;
+  margin: 10px 10px 0 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  perspective: 1000px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.card:disabled {
+  cursor: not-allowed;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.card-front {
+  background: white;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.card-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

@@ -1,9 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import Display from "./Display.tsx";
+import useRouteHomePage from "../useRouteHomepage.tsx";
+import Panel from "../HomePage/Panel.tsx";
 
 export default function StopWatch() {
   const [elapsed, setElapsed] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  useRouteHomePage();
 
   // ← MINIMAL CHANGE: accept both browser (number) and Node (NodeJS.Timeout) results
   const intervalRef = useRef<number | NodeJS.Timeout | null>(null);
@@ -68,13 +72,16 @@ export default function StopWatch() {
   };
 
   return (
-    <Display
-      elapsed={elapsed}
-      isRunning={isRunning}
-      handleStart={handleStart}
-      handleStop={handleStop}
-      handleReset={handleReset}
-      formatTime={formatTime}
-    />
+    <div>
+      <Display
+        elapsed={elapsed}
+        isRunning={isRunning}
+        handleStart={handleStart}
+        handleStop={handleStop}
+        handleReset={handleReset}
+        formatTime={formatTime}
+      />
+      <Panel isPanelOpen={isPanelOpen} setIsPanelOpen={setIsPanelOpen} />
+    </div>
   );
 }

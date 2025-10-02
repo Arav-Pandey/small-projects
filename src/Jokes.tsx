@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import HomeLogo from "./HomeLogo";
+import useRouteHomepage from "./useRouteHomepage";
+import Panel from "./HomePage/Panel";
 
 export default function Joke() {
-  // Setting varables
   const [jokeResponse, setJokeResponse] = useState<{
     setup: string;
     punchline: string;
@@ -10,70 +10,82 @@ export default function Joke() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>();
   const [refresh, setRefresh] = useState(false);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+  useRouteHomepage();
 
   useEffect(() => {
     async function fetchJoke() {
-      // <- Don't know what it means but I know its a function
       try {
-        // Try and catch block
         const response = await fetch(
-          // The response equals to whatever the server fetches from the API link
-          `https://official-joke-api.appspot.com/random_joke` // <- API link
+          `https://official-joke-api.appspot.com/random_joke`
         );
-        if (!response.ok) throw new Error("Failed to fetch jokes"); // If response is has a problem with it...make an error that says "Failed to fetch jokes"
-        const data = await response.json(); // <- IDK. All I know is data equals response in json format? Maybe
-        setJokeResponse(data); // Set the joke to whatever data equals
+        if (!response.ok) throw new Error("Failed to fetch jokes");
+        const data = await response.json();
+        setJokeResponse(data);
       } catch (err) {
-        // catches errors
-        setError((err as Error).message); // Shows a message on the screen about the error that occurred
+        setError((err as Error).message);
       } finally {
-        // After all that
-        setLoading(false); // Shows that loading has happened so no need to display loading text.(On line 29)
+        setLoading(false);
         setRefresh(false);
       }
     }
 
-    fetchJoke(); // Calls the fectchJoke function and runs all code above once
-  }, [refresh]); // <- When inside [] is changed...do useEffect code
+    fetchJoke();
+  }, [refresh]);
 
-  if (loading) return <p>Loading joke...</p>; // If its still fetching and loading the joke...Show a text that says "Loading joke..."
-  if (error) return <p>Error: {error}</p>; // If there's an error display a text saying the error
-  if (!jokeResponse) return <p>Error loading joke. :(</p>; // If jokeResponse is undifined...display a text saying "Error loading joke"
+  if (loading)
+    return <p className="text-center text-gray-300">Loading joke...</p>;
+  if (error) return <p className="text-center text-red-400">Error: {error}</p>;
+  if (!jokeResponse)
+    return <p className="text-center text-red-400">Error loading joke. :(</p>;
 
-  const refreshJoke = () => {
-    setRefresh(true);
-  };
+  const refreshJoke = () => setRefresh(true);
 
   return (
-    <div //I don't know why you have to have the class name thing and IDK what that means
-      className="bg-red-500"
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        flexDirection: "column",
+      }}
     >
-      <h2 className="text-xl font-bold mb-2">
-        {jokeResponse.setup}, {jokeResponse.punchline}
-      </h2>
-
-      <div>
-        <button
-          onClick={refreshJoke} // When the button is clicked it runs the Refresh function
-          style={{
-            width: "120px",
-            height: "24px",
-            fontSize: "14px",
-            borderRadius: "4px",
-            cursor: "pointer",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center", // Center the text
-            padding: 0, // Remove extra padding
-            display: "inline-block", // Ensure proper centering
-            marginRight: "10px",
-          }}
-        >
-          Refresh Joke
-        </button>
-
-        <HomeLogo />
+      <Panel isPanelOpen={isPanelOpen} setIsPanelOpen={setIsPanelOpen} />
+      <div
+        style={{
+          textDecoration: "none",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "rgba(255, 255, 255, 0.15)",
+          padding: "10px 20px",
+          borderRadius: "12px",
+          color: "white",
+          fontSize: "20px",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+          transition: "transform 0.2s, background 0.2s",
+          flexDirection: "column",
+          width: "700px",
+          textAlign: "center",
+        }}
+      >
+        <h2 className="text-2xl font-bold mb-4" style={{ marginBottom: "0px" }}>
+          {jokeResponse.setup}{" "}
+        </h2>
+        <p className="text-lg italic text-yellow-200 mb-6">
+          {jokeResponse.punchline}
+        </p>
       </div>
+
+      <button
+        onClick={refreshJoke}
+        style={{ marginTop: "10px", fontSize: "20px" }}
+        className="px-6 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-full shadow-md transition-all duration-300 hover:scale-110"
+      >
+        😂 New Joke
+      </button>
     </div>
   );
 }

@@ -1,20 +1,13 @@
+import { useState } from "react";
+import HoverSettings from "./HoverSettings";
 import { FcHome } from "react-icons/fc";
 
 export default function HomeLogo() {
+  const [hovered, setHovered] = useState(false);
+
   return (
     <a href="/homepage" style={{ textDecoration: "none", color: "inherit" }}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          cursor: "pointer",
-          marginTop: 20,
-        }}
-      >
-        <FcHome size={30} />
-        <span style={{ fontSize: 18 }}>Home</span>
-      </div>
+      <HoverSettings name={"Home"} icon={<FcHome size={35} />} />
     </a>
   );
 }

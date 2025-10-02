@@ -22,17 +22,49 @@ export default function Button({ value, state, setState, handlers }: Props) {
   // Handles when certain buttons are clicked
   if (value === "=") {
     return (
-      <button onClick={() => handlers.handleCalc(num1, num2, op, setResult)}>
+      <button
+        onClick={() => handlers.handleCalc(num1, num2, op, setResult)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
+      >
         {value}
       </button>
     );
   }
   if (["+", "-", "x", "/"].includes(value)) {
-    return <button onClick={() => setOp(value)}>{value}</button>;
+    return (
+      <button
+        onClick={() => setOp(value)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
+      >
+        {value}
+      </button>
+    );
   }
   if (value === "AC") {
     return (
       <button
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
         onClick={() => handlers.handleAC(setNum1, setNum2, setOp, setResult)}
       >
         {value}
@@ -45,6 +77,14 @@ export default function Button({ value, state, setState, handlers }: Props) {
         onClick={() =>
           handlers.handleBackspace(op, setNum1, setNum2, num1, num2)
         }
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
@@ -52,7 +92,17 @@ export default function Button({ value, state, setState, handlers }: Props) {
   }
   if (value === "%") {
     return (
-      <button onClick={() => handlers.handle100(op, num1, num2, setResult)}>
+      <button
+        onClick={() => handlers.handle100(op, num1, num2, setResult)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
+      >
         {value}
       </button>
     );
@@ -64,6 +114,14 @@ export default function Button({ value, state, setState, handlers }: Props) {
         onClick={() =>
           handlers.handlePlusMinus(op, setNum1, setNum2, num1, num2)
         }
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
@@ -74,6 +132,14 @@ export default function Button({ value, state, setState, handlers }: Props) {
     return (
       <button
         onClick={() => handlers.handleLog10(op, setNum1, setNum2, num1, num2)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
@@ -84,6 +150,14 @@ export default function Button({ value, state, setState, handlers }: Props) {
     return (
       <button
         onClick={() => handlers.handleLn(op, setNum1, setNum2, num1, num2)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
@@ -94,6 +168,14 @@ export default function Button({ value, state, setState, handlers }: Props) {
     return (
       <button
         onClick={() => handlers.handleCos(op, setNum1, setNum2, num1, num2)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
@@ -104,6 +186,14 @@ export default function Button({ value, state, setState, handlers }: Props) {
     return (
       <button
         onClick={() => handlers.handleSin(op, setNum1, setNum2, num1, num2)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
@@ -112,7 +202,17 @@ export default function Button({ value, state, setState, handlers }: Props) {
 
   if (value === "π") {
     return (
-      <button onClick={() => handlers.handlePi(op, setNum1, setNum2)}>
+      <button
+        onClick={() => handlers.handlePi(op, setNum1, setNum2)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
+      >
         {value}
       </button>
     );
@@ -124,6 +224,14 @@ export default function Button({ value, state, setState, handlers }: Props) {
         onClick={() =>
           handlers.handleFraction(op, setNum1, setNum2, num1, num2)
         }
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
@@ -134,6 +242,14 @@ export default function Button({ value, state, setState, handlers }: Props) {
     return (
       <button
         onClick={() => handlers.handlePowers(op, setNum1, setNum2, num1, num2)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
@@ -146,6 +262,14 @@ export default function Button({ value, state, setState, handlers }: Props) {
         onClick={() =>
           handlers.handleFactorial(op, setNum1, setNum2, num1, num2)
         }
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
@@ -156,6 +280,14 @@ export default function Button({ value, state, setState, handlers }: Props) {
     return (
       <button
         onClick={() => handlers.handleSqrt(op, setNum1, setNum2, num1, num2)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
@@ -166,6 +298,14 @@ export default function Button({ value, state, setState, handlers }: Props) {
     return (
       <button
         onClick={() => handlers.handleDecimal(op, num1, num2, setNum1, setNum2)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
@@ -177,11 +317,32 @@ export default function Button({ value, state, setState, handlers }: Props) {
     return (
       <button
         onClick={() => handlers.handleNumClick(value, op, setNum1, setNum2)}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.color = "gold"; // 👈 reset color
+        }}
       >
         {value}
       </button>
     );
   }
   // default
-  return <button>{value}</button>;
+  return (
+    <button
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "scale(1.1)";
+        e.currentTarget.style.color = "blue"; // 👈 text turns blue on hover
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.color = "gold"; // 👈 reset color
+      }}
+    >
+      {value}
+    </button>
+  );
 }

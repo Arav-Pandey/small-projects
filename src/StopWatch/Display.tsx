@@ -1,6 +1,6 @@
 import { FaPause, FaPlayCircle } from "react-icons/fa";
 import { RiResetLeftLine } from "react-icons/ri";
-import HomeLogo from "../HomeLogo";
+import HoverSettings from "../HoverSettings";
 
 type DisplayProps = {
   elapsed: number;
@@ -20,7 +20,7 @@ export default function Display({
   formatTime,
 }: DisplayProps) {
   return (
-    <div style={{ textAlign: "center", marginTop: 24 }}>
+    <div style={{ textAlign: "center", marginTop: "5px", minHeight: "10vh" }}>
       <div className="circle">
         <div className="orbit-wrapper">
           <div
@@ -32,33 +32,45 @@ export default function Display({
         </div>
       </div>
 
-      <h1>Stop Watch</h1>
+      <h1 style={{ marginBottom: "5px" }}>Stop Watch</h1>
       <h2 style={{ fontSize: 36, margin: "16px 0" }}>{formatTime(elapsed)}</h2>
 
-      <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: 8,
+          justifyContent: "center",
+          marginBottom: "20px",
+          marginTop: "5px",
+        }}
+      >
         {!isRunning ? (
           <button
             onClick={handleStart}
             style={{ background: "none", border: "none", outline: "none" }}
           >
-            <FaPlayCircle size="30" />
+            <HoverSettings name="Start" icon={<FaPlayCircle size={30} />} />
           </button>
         ) : (
           <button
             onClick={handleStop}
             style={{ background: "none", border: "none", outline: "none" }}
           >
-            <FaPause fill="white" size="30" />
+            <HoverSettings
+              name="Pause"
+              icon={<FaPause fill="white" size={30} />}
+            />
           </button>
         )}
         <button
           onClick={handleReset}
           style={{ background: "none", border: "none", outline: "none" }}
         >
-          <RiResetLeftLine fill="white" size="30" />
+          <HoverSettings
+            name="Reset"
+            icon={<RiResetLeftLine fill="white" size={30} />}
+          />
         </button>
-
-        <HomeLogo />
       </div>
     </div>
   );

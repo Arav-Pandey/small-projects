@@ -1,137 +1,75 @@
-import { FcRuler } from "react-icons/fc";
-import { FaTemperatureLow } from "react-icons/fa6";
-import { GiWeightLiftingUp } from "react-icons/gi";
-import { FaMoneyCheckDollar } from "react-icons/fa6";
-import { IoMdSpeedometer } from "react-icons/io";
-import HomeLogo from "./HomeLogo";
+import { useState } from "react";
+import Panel from "./HomePage/Panel";
+import useRouteHomePage from "./useRouteHomepage";
 
 export default function UnitConverter() {
+  const emojiLinks: { href: string; emoji: string; label: string }[] = [
+    { href: "/length", emoji: "📏", label: "Length Converter" },
+    { href: "/temperature", emoji: "🌡️", label: "Temperature Converter" },
+    { href: "/weight", emoji: "🏋️‍♂️", label: "Weight Converter" },
+    { href: "/money", emoji: "💵", label: "Money Converter" },
+    { href: "/speed", emoji: "🏎️", label: "Speed Converter" },
+  ];
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+  useRouteHomePage();
+
+  function NavLink(emoji: string, label: string, href: string) {
+    return (
+      <a
+        key={label}
+        href={href}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <div
+          style={{
+            textDecoration: "none",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(255, 255, 255, 0.15)", // ✨ translucent card
+            padding: "15px 30px",
+            borderRadius: "12px",
+            color: "white",
+            fontWeight: "500",
+            fontSize: "30px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+            transition: "transform 0.2s, background 0.2s",
+            marginBottom: "10px",
+          }}
+        >
+          <span style={{ marginRight: "10px" }}>{emoji}</span>
+          <span className="nav-link">{label}</span>
+        </div>
+      </a>
+    );
+  }
+
   return (
     <div
       style={{
+        width: "100%",
+        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        padding: "40px 0",
       }}
     >
+      <Panel isPanelOpen={isPanelOpen} setIsPanelOpen={setIsPanelOpen} />
       <h1>Unit Converter</h1>
-      <HomeLogo />
-      <nav>
-        <ul>
-          <li>
-            <a
-              href="/length"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  justifyContent: "center",
-                  marginBottom: "10px",
-                }}
-              >
-                <FcRuler size={30} />
-                <span style={{ fontSize: "18px", marginLeft: "5px" }}>
-                  Length Converter
-                </span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/temperature"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  justifyContent: "center",
-                  marginBottom: "10px",
-                }}
-              >
-                <FaTemperatureLow size={30} fill="white" />
-                <span style={{ fontSize: "18px", marginLeft: "5px" }}>
-                  Temperature Converter
-                </span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/weight"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  justifyContent: "center",
-                  marginBottom: "10px",
-                }}
-              >
-                <GiWeightLiftingUp size={30} fill="white" />
-                <span style={{ fontSize: "18px", marginLeft: "5px" }}>
-                  Weight Converter
-                </span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/unitconverter"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  justifyContent: "center",
-                  marginBottom: "10px",
-                }}
-              >
-                <FaMoneyCheckDollar size={30} fill="white" />
-                <span style={{ fontSize: "18px", marginLeft: "5px" }}>
-                  Money Converter Not working yet sorry. :(
-                </span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/speed"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  justifyContent: "center",
-                  marginBottom: "10px",
-                }}
-              >
-                <IoMdSpeedometer size={30} fill="white" />
-                <span style={{ fontSize: "18px", marginLeft: "5px" }}>
-                  Speed Converter
-                </span>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </nav>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {emojiLinks.map((link) => NavLink(link.emoji, link.label, link.href))}
+      </div>
     </div>
   );
 }

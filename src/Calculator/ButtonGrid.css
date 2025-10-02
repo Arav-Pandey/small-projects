@@ -1,0 +1,35 @@
+/* Layout container for all rows of buttons */
+.button-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Each horizontal row of buttons */
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Optional: responsive spacing on smaller screens */
+@media (max-width: 600px) {
+  .button-grid {
+    gap: 8px;
+  }
+
+  .button-row {
+    gap: 8px;
+  }
+}
+/* body {
+  background: linear-gradient(135deg, #6EE7B7 0%, #3B82F6 100%);
+  background-attachment: fixed; /* ✅ keeps gradient full even when scrolling 
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 100vh; /* ✅ covers full screen and grows if content is taller 
+}
+*/

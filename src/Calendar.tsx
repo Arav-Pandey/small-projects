@@ -1,9 +1,13 @@
 import { useState } from "react";
-import HomeLogo from "./HomeLogo";
+import useRouteHomepage from "./useRouteHomepage";
+import Panel from "./HomePage/Panel";
 
 export default function Calendar() {
-  const [year, setYear] = useState<number>(2025); // Year is a number
+  const [year, setYear] = useState<number>(new Date().getFullYear()); // Year is a number
   const [month, setMonth] = useState("January"); // Month is a string
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+  useRouteHomepage();
 
   const months = [
     // The months
@@ -38,16 +42,21 @@ export default function Calendar() {
   return (
     <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
       <h1>Calendar</h1>
-      <HomeLogo />
+      <Panel isPanelOpen={isPanelOpen} setIsPanelOpen={setIsPanelOpen} />
 
       <div style={{ display: "flex", gap: "10px", marginBottom: "16px" }}>
         <input
           type="number"
           value={year}
+          style={{ borderRadius: "7px" }}
           onChange={(e) => setYear(Number(e.target.value))} // force number
         />
 
-        <select value={month} onChange={(e) => setMonth(e.target.value)}>
+        <select
+          value={month}
+          onChange={(e) => setMonth(e.target.value)}
+          style={{ borderRadius: "7px", background: "black", color: "white" }}
+        >
           {months.map((m) => (
             <option key={m} value={m}>
               {m}
@@ -65,8 +74,8 @@ export default function Calendar() {
           textAlign: "center",
         }}
       >
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
-          <div key={d}>{d}</div>
+        {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
+          <div key={d + i}>{d}</div>
         ))}
       </div>
 
@@ -76,6 +85,9 @@ export default function Calendar() {
           display: "grid",
           gridTemplateColumns: "repeat(7, 1fr)",
           textAlign: "center",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
+          borderRadius: "7px",
+          background: "rgba(255, 255, 255, 0.15)",
         }}
       >
         {/*Empty sqaure colors and style*/}
@@ -84,12 +96,13 @@ export default function Calendar() {
             key={i}
             style={{
               padding: "8px",
-              border: "1px solid #000000ff",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
+              borderRadius: "7px",
               minHeight: "40px",
-              background: day ? "black" : "#000000ff",
+              background: "rgba(255, 255, 255, 0.15)",
             }}
           >
-            {day ?? ""} {/*???*/}
+            {day ?? ""}
           </div>
         ))}
       </div>

@@ -1,4 +1,6 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 export const handleSearch = (
   e: React.ChangeEvent<HTMLInputElement>,
@@ -10,19 +12,34 @@ export const handleSearch = (
     return;
   }
 
-  // ✅ Frontend never needs the API key — it just calls the serverless function
-  fetch(`/.netlify/functions/weather?city=${encodeURIComponent(query)}`)
+  // ✅ Use 'q' instead of 'city' so the backend receives the correct parameter
+  fetch(`/.netlify/functions/search?q=${encodeURIComponent(query)}`)
     .then((res) => res.json())
-    .then((data) => setSearchResults(data));
+    .then((data) => setSearchResults(data))
+    .catch((err) => {
+      console.error("Search error:", err);
+      setSearchResults([]);
+    });
 };
 
 export const useWeather = (city: string) => {
+  const { user } = useAuth0();
+
   const { data, error, isLoading } = useQuery({
     queryKey: ["weather", city],
-    queryFn: () =>
-      fetch(
-        `/.netlify/functions/weather?city=${encodeURIComponent(city)}`
-      ).then((res) => res.json()),
+    queryFn: async () => {
+      const response = await fetch(
+        `/.netlify/functions/weather?city=${encodeURIComponent(city)}`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            id: user?.sub,
+          }),
+        }
+      );
+
+      return response.json();
+    },
     enabled: !!city,
   });
 
