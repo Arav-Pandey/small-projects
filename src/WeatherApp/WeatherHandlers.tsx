@@ -10,10 +10,14 @@ export const handleSearch = (
     return;
   }
 
-  // ✅ Frontend never needs the API key — it just calls the serverless function
-  fetch(`/.netlify/functions/weather?city=${encodeURIComponent(query)}`)
+  // ✅ Use 'q' instead of 'city' so the backend receives the correct parameter
+  fetch(`/.netlify/functions/search?q=${encodeURIComponent(query)}`)
     .then((res) => res.json())
-    .then((data) => setSearchResults(data));
+    .then((data) => setSearchResults(data))
+    .catch((err) => {
+      console.error("Search error:", err);
+      setSearchResults([]);
+    });
 };
 
 export const useWeather = (city: string) => {

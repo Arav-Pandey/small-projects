@@ -1,17 +1,14 @@
 import { useState } from "react";
-import { FcHome } from "react-icons/fc";
 import { useQuery } from "@tanstack/react-query";
+import HomeLogo from "./HomeLogo";
 
 export default function Quote() {
   const [category] = useState("life"); // you can change category
-  const API_KEY = import.meta.env.VITE_QUOTE_API_KEY;
 
   const { data, error, isLoading } = useQuery({
     queryKey: ["quote", category], // makes a cache that stores copies of the cities
     queryFn: async () => {
-      const res = await fetch(`https://api.api-ninjas.com/v1/quotes`, {
-        headers: { "X-Api-Key": API_KEY },
-      });
+      const res = await fetch(`/.netlify/functions/quote`);
 
       if (!res.ok) throw new Error("Failed to fetch quote");
       return res.json();
@@ -23,35 +20,44 @@ export default function Quote() {
   if (!data || data.length === 0) return <p>No quotes found</p>;
 
   const refresh = () => {
-    window.location.href = "/quote";
+    window.location.href = "/quotes";
   };
 
   return (
     <div>
       <h1>Motivational Quotes</h1>
 
-      <blockquote style={{ fontSize: "20px", margin: "20px 0" }}>
+      <blockquote
+        style={{
+          fontSize: "20px",
+          margin: "20px 0",
+          boxShadow: "black",
+          background: "rgba(255, 255, 255, 0.15)",
+          padding: "12px 20px",
+          borderRadius: "14px",
+        }}
+      >
         “{data[0].quote}”
         <footer style={{ marginTop: "10px", fontStyle: "italic" }}>
           – {data[0].author}
         </footer>
       </blockquote>
 
-      <a href="/homepage" style={{ textDecoration: "none", color: "inherit" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-        >
-          <FcHome size={30} />
-          <span style={{ fontSize: "18px" }}>Home</span>
-        </div>
-      </a>
+      <HomeLogo />
 
-      <button onClick={() => refresh()}>Refresh Quote</button>
+      <button
+        onClick={() => refresh()}
+        style={{
+          background: "rgba(255, 255, 255, 0.15)", // ✨ translucent card
+          padding: "12px 20px",
+          borderRadius: "14px",
+          color: "white",
+
+          boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
+        }}
+      >
+        Refresh Quote
+      </button>
     </div>
   );
 }
