@@ -1,5 +1,6 @@
-import Button from "./Button.tsx";
-// What does props mean
+import Button from "./Button";
+import "./ButtonGrid.css"; // 👈 we’ll make this file next
+
 type Props = {
   buttonValueChunks: string[][];
   state: {
@@ -8,17 +9,15 @@ type Props = {
     op: string | null;
     result: number | null;
   };
-  //setState is like setNum1 execpt it's doing it for every variable in state
   setState: {
     setNum1: (val: string | ((prev: string) => string)) => void;
     setNum2: (val: string | ((prev: string) => string)) => void;
     setOp: (op: string | null) => void;
     setResult: (res: number | null) => void;
   };
-  handlers: any; // A function
+  handlers: any;
 };
 
-// Sets up how the buttons will look
 export default function ButtonGrid({
   buttonValueChunks,
   state,
@@ -26,9 +25,9 @@ export default function ButtonGrid({
   handlers,
 }: Props) {
   return (
-    <>
+    <div className="button-grid">
       {buttonValueChunks.map((row, rowIdx) => (
-        <div key={rowIdx}>
+        <div key={rowIdx} className="button-row">
           {row.map((buttonValue, colIdx) => (
             <Button
               key={colIdx}
@@ -40,6 +39,6 @@ export default function ButtonGrid({
           ))}
         </div>
       ))}
-    </>
+    </div>
   );
 }

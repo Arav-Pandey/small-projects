@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import HomeLogo from "./HomeLogo";
+import routeHomePage from "./routeHomepage";
 
 export default function Word() {
   const [amount, setAmount] = useState(0);
   const [sentence, setSentence] = useState("");
+
+  routeHomePage();
 
   useEffect(() => {
     count();
@@ -32,6 +35,7 @@ export default function Word() {
           setSentence(e.target.value);
           count();
         }}
+        style={{ borderRadius: "10px" }}
       />
 
       <div>

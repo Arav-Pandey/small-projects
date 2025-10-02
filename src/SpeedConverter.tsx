@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { FcHome } from "react-icons/fc";
 import HomeLogo from "./HomeLogo";
+import routeHomePage from "./routeHomepage";
 
 export default function SpeedConverter() {
   const [num, setNum] = useState("");
   const [result, setResult] = useState(0);
   const [fromSpeed, setFromSpeed] = useState("mph");
   const [toSpeed, setToSpeed] = useState("mph");
+
+  routeHomePage();
 
   useEffect(() => {
     convert();
@@ -38,7 +41,7 @@ export default function SpeedConverter() {
         height: "100vh",
       }}
     >
-      <h1>Speed Converter</h1>
+      <h1 style={{ marginBottom: "2px" }}>Speed Converter</h1>
 
       <HomeLogo />
 
@@ -46,26 +49,42 @@ export default function SpeedConverter() {
         onChange={(e) => setNum(e.target.value)}
         type="number"
         value={num}
+        style={{
+          padding: "10px",
+          fontSize: "16px",
+          marginBottom: "20px",
+          borderRadius: "10px",
+        }}
       />
 
-      <div>
+      <div style={{ marginBottom: "10px" }}>
         <select
           onChange={(e) => setFromSpeed(e.target.value)}
           style={{
             marginTop: "10px",
             marginRight: "10px",
+            borderRadius: "7px",
+            fontSize: "15px",
           }}
         >
           <option value="mph">Miles per hour</option>
           <option value="kph">Kilometers per hour</option>
         </select>
-        <select onChange={(e) => setToSpeed(e.target.value)}>
+        <select
+          onChange={(e) => setToSpeed(e.target.value)}
+          style={{
+            marginTop: "10px",
+            marginRight: "10px",
+            borderRadius: "7px",
+            fontSize: "15px",
+          }}
+        >
           <option value="mph">Miles per hour</option>
           <option value="kph">Kilometers per hour</option>
         </select>
       </div>
 
-      <div>
+      <div style={{ fontSize: "25px" }}>
         <strong>
           Result: {num} {fromSpeed} ={" "}
         </strong>
